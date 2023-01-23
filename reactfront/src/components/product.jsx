@@ -6,7 +6,7 @@ function Product(props){
             <div className="contenedor-imagen-producto">
                 <img src={props.image} alt={props.imageName} />
             </div>
-            <div className="detallesProducto">
+            <div className="detalles-producto">
                 <h4>{props.price}</h4>
                 <h4>{props.name}</h4>
                 <p>{props.details}</p>
