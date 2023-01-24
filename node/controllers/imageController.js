@@ -7,20 +7,15 @@ const dirpath = path.dirname(__filename);
 
 export const getImage = async (req, res) => {
     try {
-        let images = await ImageModel.findAll();
+        let images = await ImageModel.findAll({
+            order:[
+                ['idProduct', 'ASC']
+            ]
+        });
         images = images.map( image => image.image1 )
         res.json(images);
     } catch (error) {
         res.json( {message: error.message} );
-    }
-}
-
-export const getImageFile = async (req, res) => {
-    try {
-        res.contentType("image/jpeg");
-        res.sendFile(path.join(dirpath, req.query.url));
-    } catch (error) {
-        res.json({message: error.message});
     }
 }
 

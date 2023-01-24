@@ -14,19 +14,13 @@ const CompShowProducts = () => {
 
     const getProducts = async () => {
         const res = await axios.get(URI);
-        setProducts(res.data);
-    }
-
-    const getImageURL = async id => {
-        const res = await axios.get(URI + 'image/' + id);
-        console.log(res.data);
-        const resImage = await axios.get(URI + 'image/url',
-            {
-                params: {
-                    url: res.data
-                }
-            })
-        return resImage.data;
+        const resImage = await axios.get(URI + 'image/');
+        let response = [];
+        for(let i=0; i<res.data.length; i++){
+            response.push({info: res.data[i], image: resImage.data[i]})
+        }
+        console.log(response);
+        setProducts(response);
     }
 
 
@@ -36,12 +30,12 @@ const CompShowProducts = () => {
                 {
                     products.map(product =>
                         <Product
-                            key={product.id}
-                            name={product.name}
-                            details={product.details}
-                            price={product.price}
-                            imageName={product.imgName}
-                            image={getImageURL(product.id)}
+                            key={product.info.id}
+                            name={product.info.name}
+                            details={product.info.details}
+                            price={product.info.price}
+                            // imageName={product.imgName}
+                            image={product.image}
                         />
                     )
                 }

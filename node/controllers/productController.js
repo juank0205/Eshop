@@ -2,7 +2,11 @@ import ProductModel from "../models/productModel.js";
 
 export const getAllProducts = async (req, res) => {
     try{
-        const productos = await ProductModel.findAll();
+        const productos = await ProductModel.findAll({
+            order:[
+                ['id', 'ASC']
+            ]
+        });
         res.json(productos);
     } catch (error){
         res.json( {message: error.message} )
