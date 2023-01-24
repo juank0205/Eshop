@@ -1,9 +1,5 @@
 import ImageModel from "../models/imageModel.js";
-import path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const dirpath = path.dirname(__filename);
 
 export const getImage = async (req, res) => {
     try {

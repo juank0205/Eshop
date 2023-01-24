@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Product from './product.jsx';
 import '../stylesheets/showProduct.css'
 
-const URI = 'http://localhost:8000/products/';
+const URI = 'http://192.168.39.176:8000/products/';
 
 const CompShowProducts = () => {
 
@@ -19,7 +19,6 @@ const CompShowProducts = () => {
         for(let i=0; i<res.data.length; i++){
             response.push({info: res.data[i], image: resImage.data[i]})
         }
-        console.log(response);
         setProducts(response);
     }
 
@@ -31,6 +30,7 @@ const CompShowProducts = () => {
                     products.map(product =>
                         <Product
                             key={product.info.id}
+                            id={product.info.id}
                             name={product.info.name}
                             details={product.info.details}
                             price={product.info.price}
