@@ -1,0 +1,50 @@
+.contenedor-general{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-login{
+    width: 500px;
+    height: 400px;
+    margin-top: 150px;
+    background-color: #fff;
+    border-radius: 25px;
+}
+
+.titulo-login{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+.contenedor-login form{
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.contenedor-login *{
+    margin-bottom: 20px;
+}
+
+.contenedor-login button{
+    background-color: #3e2462;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-right: 80px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+}
+
+.contenedor-login button:hover{
+    transition: 0.2s;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
+}

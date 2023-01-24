@@ -4,7 +4,7 @@ import { buy } from "./carrito";
 import { useLocation } from "react-router-dom";
 import '../stylesheets/productDetailed.css'
 
-const cond = 'http://192.168.39.176:8000/products'
+const cond = 'http://localhost:8000/products'
 
 function ProductDetail(props) {
     const location = useLocation().pathname;

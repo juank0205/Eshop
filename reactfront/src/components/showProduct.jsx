@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Product from './product.jsx';
 import '../stylesheets/showProduct.css'
 
-const URI = 'http://192.168.39.176:8000/products/';
+const URI = 'http://localhost:8000/products/';
 
 const CompShowProducts = () => {
 

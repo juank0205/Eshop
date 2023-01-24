@@ -4,7 +4,8 @@
     position: relative;
     background-color: #fff;
     width: 250px;
-    margin: 5px 20px 5px 20px;
+    height: 400px;
+    margin: 60px 20px 5px 20px;
     cursor: pointer;
 }
 

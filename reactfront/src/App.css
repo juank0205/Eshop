@@ -26,6 +26,30 @@ body, html{
     align-items: center;
 }
 
+.user{
+    position: relative;
+    height: 40px;
+    width: 80px;
+    margin-right: 20px;
+    margin-top: 5px;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #3e2462;
+}
+
+.user:hover{
+    transition: 0.2s;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.contenedor-auth{
+    display: flex;
+    flex-direction: row;
+}
+
 .contenedor-logo img{
     height: 70px;
     max-width: 100%;
