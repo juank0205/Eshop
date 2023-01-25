@@ -10,7 +10,7 @@ function Signup() {
                         <div className="texto-form">Usuario:</div>
                         <input type="text" />
                         <div className="texto-form">Contraseña:</div>
-                        <input type="text" />
+                        <input type="password" />
                         <button type="submit">CONTINUE</button>
                     </form>
                 </div>

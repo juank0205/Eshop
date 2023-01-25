@@ -1,11 +1,21 @@
 import { useState } from 'react';
 import '../stylesheets/login.css'
+import axios from 'axios';
 
 function Login() {
 
-    const [username, setUsername] = useState('');
-    const handleLogin = (event) => {
-        console.log(event.target);
+    const [body, setbody] = useState({username: '', password: ''});
+
+    const inputChange = ({target}) => {
+        const { name, value } = target;
+        setbody({...body, [name]: value});  
+    }
+
+    const onSubmit = e => {
+        e.preventDefault();
+        axios.post('http://localhost:8000/products/login', body)
+        .then(({data})=> {console.log(data)})
+        .catch(({response}) => {console.log(response)});
     }
 
     return (
@@ -13,12 +23,12 @@ function Login() {
             <div className="contenedor-general">
                 <div className="contenedor-login">
                     <h1 className="titulo-login">LOGIN</h1>
-                    <form action="" onSubmit={handleLogin}>
-                        <div className="texto-form" name="username">Usuario:</div>
-                        <input type="text" />
-                        <div className="texto-form" name="password">Contraseña:</div>
-                        <input type="text" />
-                        <button type="submit">CONTINUE</button>
+                    <form>
+                        <div className="texto-form">Usuario:</div>
+                        <input type="text" name="username" value={body.username} onChange={inputChange}/>
+                        <div className="texto-form">Contraseña:</div>
+                        <input type="text" name='password' value={body.password} onChange={inputChange}/>
+                        <button onClick={onSubmit}>CONTINUE</button>
                     </form>
                 </div>
             </div>
