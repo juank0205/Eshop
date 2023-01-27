@@ -7,7 +7,6 @@ const UserModel = db.define('users', {
     password: {type: DataTypes.STRING},
     phone: {type: DataTypes.NUMBER},
     email: {type: DataTypes.STRING},
-    isAdmin: {type: DataTypes.BOOLEAN},
     address: {type: DataTypes.TEXT}
 })
 

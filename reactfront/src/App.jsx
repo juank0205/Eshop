@@ -50,7 +50,7 @@ function App() {
             <Route path='/front/:id' element={<ProductDetail />} />
             <Route path='/cart/' element={<Carrito />} />
             <Route path='/login' element={<Login funcion={setter}/>}/>
-            <Route path='/signup' element={<Signup />}></Route>
+            <Route path='/signup' element={<Signup funcion={setter}/>}></Route>
           </Routes>
         </BrowserRouter>
       </div>
