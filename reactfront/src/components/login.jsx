@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import '../stylesheets/login.css'
 import axios from 'axios';
-
-function Login() {
+import { Navigate } from 'react-router-dom';
+function Login({funcion}) {
 
     const [body, setbody] = useState({username: '', password: ''});
+    const [auth, setAuth] = useState(false);
 
     const inputChange = ({target}) => {
         const { name, value } = target;
@@ -14,8 +15,18 @@ function Login() {
     const onSubmit = e => {
         e.preventDefault();
         axios.post('http://localhost:8000/products/login', body)
-        .then(({data})=> {console.log(data)})
+        .then(({data})=> {
+            if(data === 'Usuario no valido') return;
+            localStorage.setItem('auth', true);
+            localStorage.setItem('username', data.username);
+            funcion(true);
+            setAuth(true);
+        })
         .catch(({response}) => {console.log(response)});
+    }
+
+    if(auth){
+        return <Navigate to='/'/>
     }
 
     return (

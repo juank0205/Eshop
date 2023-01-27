@@ -48,6 +48,14 @@ body, html{
 .contenedor-auth{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    text-transform:uppercase;
+    color: #FFF;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-user img{
+    height: 53px;
 }
 
 .contenedor-logo img{
@@ -60,4 +68,11 @@ body, html{
     height: 50px;
     max-width: 100%;
     margin: auto 50px auto 50px;
+    
 }
+
+.header-derecha{
+    display: flex;
+    flex-direction: row;
+}
+

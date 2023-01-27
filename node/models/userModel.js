@@ -4,7 +4,11 @@ import ProductModel from "./productModel.js"
 
 const UserModel = db.define('users', {
     username: {type: DataTypes.STRING},
-    password: {type: DataTypes.STRING}
+    password: {type: DataTypes.STRING},
+    phone: {type: DataTypes.NUMBER},
+    email: {type: DataTypes.STRING},
+    isAdmin: {type: DataTypes.BOOLEAN},
+    address: {type: DataTypes.TEXT}
 })
 
 export default UserModel;

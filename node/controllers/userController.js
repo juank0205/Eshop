@@ -14,3 +14,12 @@ export const getUser = async (req, res) => {
         res.json({message: error.message})
     }
 }
+
+export const createUser = async (req, res) => {
+    try {
+        await UserModel.create(req.body);
+        res.json('Usuario Creado exitosamente');
+    } catch (error) {
+        res.json({message: error.message});
+    }
+}
