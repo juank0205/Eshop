@@ -18,7 +18,6 @@ function Signup({funcion}) {
         console.log(body);
         axios.post('http://localhost:8000/products/signup', body)
         .then(({data})=> {
-            console.log(data);
             if(data !== 'Usuario Creado exitosamente') return;
             localStorage.setItem('auth', true);
             localStorage.setItem('username', body.username);

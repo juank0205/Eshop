@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import userLogo from '../images/user.png';
-import useUser from './hooks/UseUser'
+import useUser from './hooks/UseUser';
+import cart from '../images/cart.png';
 
 const LoginButtons = ({logout}) => {
     const user = useUser();
@@ -20,6 +21,11 @@ const LoginButtons = ({logout}) => {
                     <img src={userLogo} alt="Logo" />
                 </div>
                 <div className="username">{user.username}</div>
+                <div className="contenedor-carrito">
+                <Link to={'/cart/'}>
+                  <img src={cart} alt="cart" />
+                </Link>
+              </div>
             </div>
         )
     } else {

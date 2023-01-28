@@ -1,43 +1,19 @@
 import axios from "axios";
 import Bought from "./productBought";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import '../stylesheets/carrito.css';
-
-export let boughtObj = {};
-
-export const buy = id => {
-    if (boughtObj.hasOwnProperty(id)) {
-        boughtObj[id]++;
-    } else {
-        boughtObj[id] = 1;
-    }
-   return boughtObj;
-}
-
-export const deleteBought = id => {
-    if (boughtObj[id] == 0) return;
-    boughtObj[id]--;
-    if (boughtObj[id] == 0) {
-        delete boughtObj[id];
-    }
-    return boughtObj;
-}
-
+import useCart from "./hooks/useCart";
+import { useEffect } from "react";
+import { priceText } from "../App";
 
 const URI = 'http://localhost:8000/products/';
 
 function Carrito() {
-
-    const [quantity, setQuantity] = useState([]);
-    useEffect(() => {
-        setQuantity(boughtObj);
-    }, [boughtObj]);
-
+    const cart = useCart();
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        getProducts()
-    }, []);
+        getProducts();
+    }, [cart])
 
     const getProducts = async () => {
         const res = await axios.get(URI);
@@ -46,44 +22,70 @@ function Carrito() {
         for (let i = 0; i < res.data.length; i++) {
             response.push({ info: res.data[i], image: resImage.data[i] })
         }
-
         const bought = [];
-        Object.keys(boughtObj).map(id => bought.push(response[id - 1]));
+        Object.keys(cart.boughtObj).map(id => bought.push(response[id - 1]));
         setProducts(bought);
     }
 
-    const updateComponent = () => {
-        setQuantity(boughtObj);
+    const handleClickBuy = id => {
+        if (cart.boughtObj.hasOwnProperty(id)) {
+            cart.boughtObj[id]++;
+        } else {
+            cart.boughtObj[id] = 1;
+        }
+        cart.setBoughtObj({ ...cart.boughtObj });
+        // localStorage.setItem('boughtObj', JSON.stringify(cart.boughtObj))
     }
 
+    const handleClickDelete = id => {
+        cart.boughtObj[id]--;
+        if (cart.boughtObj[id] === 0) {
+            delete cart.boughtObj[id];
+        }
+        cart.setBoughtObj({ ...cart.boughtObj });
+        // localStorage.setItem('boughtObj', JSON.stringify(cart.boughtObj))
+    }
+
+    let subTotal = 0;
 
     return (
         <>
             <div className="contenedor-compra-carrito">
+                <div className="top-cart">
+                    <div className="contenedor-imagen-comprado"></div>
+                    <div className="contenedor-producto-comprado"> NAME</div>
+                    <div className="contenedor-cantidad-comprado"> QUANTITY</div>
+                    <div className="contenedor-precio-comprado"> PRICE</div>
+                </div>
+                <div className="division"></div>
                 {
-                    products.map((product, index) =>
-                        <div className="bought" key={index}>
-                            <Bought
-                                key={index+'bought'}
-                                id={product.info.id}
-                                name={product.info.name}
-                                price={product.info.price}
-                                quantity={quantity[product.info.id]}
-                                image={product.image}
-                            />
-                            <div className="delete-add" key={index+'add'}>
-                                <button key={index+'add'} onClick={() => {
-                                    deleteBought(product.info.id);
-                                    updateComponent();
-                                }} className="delete">-</button>
-                                <button key={index+'delete'} onClick={() => {
-                                    buy(product.info.id);
-                                    updateComponent();
-                                }} className="add">+</button>
+                    products.map((product, index) => {
+                        subTotal += product.info.price*cart.boughtObj[product.info.id];
+                        return(
+                            <div className="cart-container">
+                                <div className="bought" key={index}>
+                                    <Bought
+                                        key={index + 'bought'}
+                                        id={product.info.id}
+                                        name={product.info.name}
+                                        price={product.info.price}
+                                        quantity={cart.boughtObj[product.info.id]}
+                                        image={product.image}
+                                        handleBuy={handleClickBuy}
+                                        handleDelete={handleClickDelete}
+                                    />
+                                </div>
                             </div>
-                        </div>
+
+                        )
+                    }
                     )
                 }
+                <div className="division"></div>
+                <div className="contenedor-subtotal">
+                    <div className="texto-subtotal">TOTAL:  </div>
+                    <div className="subtotal">{priceText(subTotal)}</div>
+                </div>
             </div>
         </>
     )

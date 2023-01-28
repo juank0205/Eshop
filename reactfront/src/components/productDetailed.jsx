@@ -1,19 +1,25 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { buy } from "./carrito";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
+import useUser from './hooks/UseUser';
+import useCart from "./hooks/useCart";
+import { priceText } from "../App";
 import '../stylesheets/productDetailed.css'
 
 const cond = 'http://localhost:8000/products'
 
-function ProductDetail(props) {
+function ProductDetail() {
+    const user = useUser();
+    const cart = useCart();
+    const [hasBought, setHasBought] = useState(false);
+
     const location = useLocation().pathname;
     const dato = location.length - 1;
 
     const [productoDetalle, setProductoDetalle] = useState({info: {name:'', price:0, details:''}, imagen:''})
     useEffect( ()=>{
-        getProductoDetalle()
-    }, [])
+        getProductoDetalle();
+    }, []);
 
     const getProductoDetalle = async () => {
         const res = await axios.get(cond + '/' + location[dato]);
@@ -22,9 +28,22 @@ function ProductDetail(props) {
     }
 
     const handleClick = () => {
-        buy(productoDetalle.info.id);
+        if (cart.boughtObj.hasOwnProperty(productoDetalle.info.id)){
+            cart.boughtObj[productoDetalle.info.id]++;
+        } else{
+            cart.boughtObj[productoDetalle.info.id] = 1;
+        }
+        cart.setBoughtObj({...cart.boughtObj});
+        // localStorage.setItem('boughtObj', JSON.stringify(cart.boughtObj))
+        setHasBought(true);
     }
 
+    if (hasBought){
+        if (user.auth) {
+            return <Navigate to={'/cart'}/>
+        }
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <>
@@ -37,13 +56,12 @@ function ProductDetail(props) {
                         {productoDetalle.info.name}
                     </h1>
                     <h2 className="contenedor-precio-detalle">
-                        {productoDetalle.info.price}$
+                        {priceText(productoDetalle.info.price)}
                     </h2>
                     <p className="contenedor-texto-detalle">
                         {productoDetalle.info.details}
                     </p>
                     <button onClick={handleClick} className="buy">BUY</button>
-
                 </div>
             </div>
         </>

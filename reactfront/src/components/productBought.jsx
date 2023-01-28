@@ -1,8 +1,15 @@
-import { boughtObj, buy, deleteBought } from "./carrito";
+import { priceText } from "../App";
 
-function Bought(props){
+function Bought(props) {
+    const handleClickBuy = () => {
+        props.handleBuy(props.id);
+    }
 
-    return(
+    const handleClickDelete = ( )=> {
+        props.handleDelete(props.id);
+    }
+
+    return (
         <div className="contenedor-comprado">
             <div className="contenedor-imagen-comprado">
                 <img src={props.image} alt="" />
@@ -14,7 +21,11 @@ function Bought(props){
                 <p>{props.quantity}</p>
             </div>
             <div className="contenedor-precio-comprado">
-                <p>{props.price}</p>
+                <p>{priceText(props.price*props.quantity)}</p>
+            </div>
+            <div className="delete-add">
+                <button onClick={handleClickBuy} className="add">+</button>
+                <button onClick={handleClickDelete} className="delete">-</button>
             </div>
         </div>
     )
