@@ -54,7 +54,7 @@ function Carrito() {
                     products.map((product, index) => {
                         subTotal += product.info.price*cart.boughtObj[product.info.id];
                         return(
-                            <div className="cart-container">
+                            <div className="cart-container" key={index+'-container'}>
                                 <div className="bought" key={index}>
                                     <Bought
                                         key={index + 'bought'}

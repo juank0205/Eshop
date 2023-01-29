@@ -16,7 +16,7 @@ function Login({funcion}) {
         e.preventDefault();
         axios.post('http://localhost:8000/products/login', body)
         .then(({data})=> {
-            if(data === 'Usuario no valido') return;
+            if(data === 'Usuario no valido') return alert('User and/or password are incorrect');
             localStorage.setItem('auth', true);
             localStorage.setItem('username', data.username);
             localStorage.setItem('isAdmin', data.isAdmin);

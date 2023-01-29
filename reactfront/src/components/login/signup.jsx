@@ -15,16 +15,16 @@ function Signup({funcion}) {
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log(body);
         axios.post('http://localhost:8000/products/signup', body)
         .then(({data})=> {
-            if(data !== 'Usuario Creado exitosamente') return;
+            if(data !== 'Usuario Creado exitosamente') return alert('Data not valid');
             localStorage.setItem('auth', true);
             localStorage.setItem('username', body.username);
             funcion(true);
             setAuth(true);
+            alert('User created succesfully')
         })
-        .catch(({response}) => {console.log(response)});
+        .catch(({response}) => alert(response.message));
     }
 
     if(auth){
