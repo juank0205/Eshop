@@ -1,5 +1,5 @@
 import axios from "axios";
-import Bought from "./productBought";
+import Bought from "./products/productBought";
 import { useState } from "react";
 import '../stylesheets/carrito.css';
 import useCart from "./hooks/useCart";
@@ -28,22 +28,14 @@ function Carrito() {
     }
 
     const handleClickBuy = id => {
-        if (cart.boughtObj.hasOwnProperty(id)) {
-            cart.boughtObj[id]++;
-        } else {
-            cart.boughtObj[id] = 1;
-        }
+        cart.boughtObj.hasOwnProperty(id) ? cart.boughtObj[id]++ : cart.boughtObj[id] = 1;
         cart.setBoughtObj({ ...cart.boughtObj });
-        // localStorage.setItem('boughtObj', JSON.stringify(cart.boughtObj))
     }
 
     const handleClickDelete = id => {
         cart.boughtObj[id]--;
-        if (cart.boughtObj[id] === 0) {
-            delete cart.boughtObj[id];
-        }
+        cart.boughtObj[id] === 0 ? delete cart.boughtObj[id] : void(0);
         cart.setBoughtObj({ ...cart.boughtObj });
-        // localStorage.setItem('boughtObj', JSON.stringify(cart.boughtObj))
     }
 
     let subTotal = 0;

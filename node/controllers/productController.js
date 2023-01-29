@@ -23,3 +23,14 @@ export const getProduct = async (req, res) => {
         res.json( {message: error.message} );
     }
 }
+
+export const updateProduct = async (req, res) => {
+    try {
+        await ProductModel.update(req.body, {
+            where: {id: req.params.id}
+        });
+        res.json('Registro actualizado correctamente')
+    } catch (error) {
+        res.json( {message: error });
+    }
+}

@@ -1,4 +1,4 @@
-import { priceText } from "../App";
+import { priceText } from "../../App";
 
 function Bought(props) {
     const handleClickBuy = () => {

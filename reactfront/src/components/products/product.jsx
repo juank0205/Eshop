@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
-import { priceText } from '../App';
-import '../stylesheets/product.css'
+import { priceText } from '../../App';
+import useUser from '../hooks/UseUser';
+import '../../stylesheets/product.css'
 
 function Product(props){
+    const user = useUser();
     return(
-        <Link to={`/front/${props.id}`}>
+        <Link to={user.isAdmin === 'true' ? `/edit/${props.id}` : `/front/${props.id}`}>
             <div className="contenedor-producto">
                 <div className="contenedor-imagen-producto">
                     <img src={props.image} alt="product"/>

@@ -1,18 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import userLogo from '../images/user.png';
-import useUser from './hooks/UseUser';
-import cart from '../images/cart.png';
+import userLogo from '../../images/user.png';
+import useUser from '../hooks/UseUser';
+import cart from '../../images/cart.png';
 
 const LoginButtons = ({logout}) => {
     const user = useUser();
 
-    const handleClick = e =>{
-        e.preventDefault();
+    const handleClick = () =>{
         logout(false);
         localStorage.removeItem('auth');
         localStorage.removeItem('username');
+        localStorage.removeItem('isAdmin');
+        window.location.href = '/';
     }
+
     if (user.auth) {
         return (
             <div className="contenedor-auth">

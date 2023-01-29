@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Product from './product.jsx';
-import '../stylesheets/showProduct.css'
+import '../../stylesheets/showProduct.css'
 
 const URI = 'http://localhost:8000/products/';
 
