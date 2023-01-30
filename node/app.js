@@ -27,19 +27,12 @@ app.listen(PORT, () => {
 })
 
 const products = await ProductModel.findAll({
-    attributes: ['id', 'name', 'stockCurrent', 'stockMin'],
-    order:[
-        ['id', 'ASC']
-    ]
+    attributes: ['id', 'name', 'stockCurrent', 'stockMin']
 })
 
 let productsStock = {}
 let productMinStock = {}
-products.forEach(product => {
-    productsStock[product.dataValues.id] = product.dataValues.stockCurrent;
-});
-products.forEach(product => {
-    productMinStock[product.dataValues.id] = {stockMin: product.dataValues.stockMin, name: product.dataValues.name};
-});
+products.forEach(product => { productsStock[product.dataValues.id] = product.dataValues.stockCurrent });
+products.forEach(product => { productMinStock[product.dataValues.id] = {stockMin: product.dataValues.stockMin, name: product.dataValues.name} });
 
 export {productsStock, productMinStock};

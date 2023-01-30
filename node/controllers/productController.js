@@ -37,7 +37,7 @@ export const updateProduct = async (req, res) => {
     }
 }
 
-export const bookProduct = async (req, res) => {
+export const bookProduct = (req, res) => {
     try {
         if (req.query.f === 'unbook'){
             productsStock[req.params.id]++;

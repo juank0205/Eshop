@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import userLogo from '../../images/user.png';
 import useUser from '../hooks/UseUser';
 import cart from '../../images/cart.png';
+import EditAdmin from './editAdmin.jsx';
 
-const LoginButtons = ({logout}) => {
+const LoginButtons = ({ logout }) => {
     const user = useUser();
 
-    const handleClick = () =>{
+    const handleClick = () => {
         logout(false);
         localStorage.removeItem('auth');
         localStorage.removeItem('username');
@@ -15,7 +16,19 @@ const LoginButtons = ({logout}) => {
         window.location.href = '/';
     }
 
-    if (user.auth) {
+    if (user.auth == "true") {
+        if (user.isAdmin == "true") return (
+            <div className="contenedor-auth">
+                <button className="user" onClick={handleClick}>LOGOUT</button>
+                <Link to={'/admin'}>
+                    <div className="container-user">
+                        <img src={userLogo} alt="Logo" />
+                    </div>
+                </Link>
+                <div className="username">{user.username}</div>
+                <div className="contenedor-carrito"></div>
+            </div>
+        )
         return (
             <div className="contenedor-auth">
                 <button className="user" onClick={handleClick}>LOGOUT</button>
@@ -24,10 +37,10 @@ const LoginButtons = ({logout}) => {
                 </div>
                 <div className="username">{user.username}</div>
                 <div className="contenedor-carrito">
-                <Link to={'/cart/'}>
-                  <img src={cart} alt="cart" />
-                </Link>
-              </div>
+                    <Link to={'/cart/'}>
+                        <img src={cart} alt="cart" />
+                    </Link>
+                </div>
             </div>
         )
     } else {

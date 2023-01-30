@@ -11,6 +11,7 @@ import CartContext from './components/context/CartContext';
 import UserContext from './components/context/UserContext'
 import { useState, useEffect } from 'react';
 import LoginButtons from './components/login/loginButtons';
+import EditAdmin from './components/login/editAdmin';
 
 export const priceText = price => {
   price = String(price);
@@ -70,7 +71,8 @@ function App() {
               <Route path='/cart/' element={<Carrito />} />
               <Route path='/login' element={<Login funcion={setter} />} />
               <Route path='/signup' element={<Signup funcion={setter} />}></Route>
-
+              <Route path='/admin' element={<EditAdmin />}/>
+              
             </Routes>
           </BrowserRouter>
         </div>

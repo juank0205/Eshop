@@ -6,13 +6,12 @@ const URL = 'http://localhost:8000/products/book/';
 function Bought(props) {
     const handleClickBuy = async () => {
         const res = await axios.get(URL + props.id + '?f=book');
-        if (res.data === 'Booked') return props.handleBuy(props.id);
-        if (res.data === 'Stockout') return alert('Item out of stock');
+        res.data === 'Booked' ? props.handleBuy(props.id) : res.data === 'Stockout'? alert('Item out of stock'): void(0);
     }
 
     const handleClickDelete = async () => {
         const res = await axios.get(URL + props.id + '?f=unbook');
-        if (res.data === 'Unbooked') return props.handleDelete(props.id);
+        res.data === 'Unbooked' ? props.handleDelete(props.id) : void(0);
     }
 
     return (
