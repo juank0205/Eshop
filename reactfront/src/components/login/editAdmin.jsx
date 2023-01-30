@@ -41,7 +41,7 @@ const EditAdmin = () => {
                         <div className="texto-form">Username:</div>
                         <input type="text" name="username" value={body.username} onChange={inputChange}/>
                         <div className="texto-form">Password:</div>
-                        <input type="text" name="password" value={body.password} onChange={inputChange}/>
+                        <input type="password" name="password" value={body.password} onChange={inputChange}/>
                         <div className="texto-form">email:</div>
                         <input type="text" name="email" value={body.email} onChange={inputChange}/>
                         <div className="texto-form">Address:</div>

@@ -17,14 +17,14 @@ function Signup({funcion}) {
         e.preventDefault();
         axios.post('http://localhost:8000/products/signup', body)
         .then(({data})=> {
-            if(data !== 'Usuario Creado exitosamente') return alert('Data not valid');
+            if(data !== 'User Created successfully') return alert('Data not valid');
             localStorage.setItem('auth', true);
             localStorage.setItem('username', body.username);
             funcion(true);
             setAuth(true);
             alert('User created succesfully')
         })
-        .catch(({response}) => alert(response.message));
+        .catch((response) => alert(response.message));
     }
 
     if(auth){
