@@ -100,3 +100,20 @@
     flex-direction: row;
     margin-top: 20px;
 }
+
+.text-subtotal{
+    width: 20%;
+}
+
+.spacer{
+    width: 70%;
+}
+
+.buy-button{
+    width: 10%;
+    height: 30px;
+    border-radius: 25px;
+    background-color: #3e2462;
+    color: #fff;
+    border: none;
+}

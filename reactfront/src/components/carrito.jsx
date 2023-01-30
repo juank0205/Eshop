@@ -11,20 +11,18 @@ const URI = 'http://localhost:8000/products/';
 function Carrito() {
     const cart = useCart();
     const [products, setProducts] = useState([]);
+    const [images, setImages] = useState([]);
     useEffect(() => {
         getProducts();
     }, [cart])
 
     const getProducts = async () => {
         const res = await axios.get(URI);
-        const resImage = await axios.get(URI + 'image/');
-        let response = [];
-        for (let i = 0; i < res.data.length; i++) {
-            response.push({ info: res.data[i], image: resImage.data[i] })
-        }
-        const bought = [];
-        Object.keys(cart.boughtObj).map(id => bought.push(response[id - 1]));
+        const resImage = await axios.get(URI + 'image');
+        let bought = [];
+        Object.keys(cart.boughtObj).map(id => bought.push(res.data[id - 1]));
         setProducts(bought);
+        setImages(resImage.data);
     }
 
     const handleClickBuy = id => {
@@ -36,6 +34,17 @@ function Carrito() {
         cart.boughtObj[id]--;
         cart.boughtObj[id] === 0 ? delete cart.boughtObj[id] : void(0);
         cart.setBoughtObj({ ...cart.boughtObj });
+    }
+
+    const Checkout = async e => {
+        e.preventDefault();
+        await axios.put(URI + 'buy', cart.boughtObj)
+        .then(({data}) => {
+            alert(data);
+        }).catch(error => {
+            alert(error);
+        })
+        window.location.href = '/';
     }
 
     let subTotal = 0;
@@ -52,17 +61,17 @@ function Carrito() {
                 <div className="division"></div>
                 {
                     products.map((product, index) => {
-                        subTotal += product.info.price*cart.boughtObj[product.info.id];
+                        subTotal += product.price*cart.boughtObj[product.id];
                         return(
                             <div className="cart-container" key={index+'-container'}>
                                 <div className="bought" key={index}>
                                     <Bought
                                         key={index + 'bought'}
-                                        id={product.info.id}
-                                        name={product.info.name}
-                                        price={product.info.price}
-                                        quantity={cart.boughtObj[product.info.id]}
-                                        image={product.image}
+                                        id={product.id}
+                                        name={product.name}
+                                        price={product.price}
+                                        quantity={cart.boughtObj[product.id]}
+                                        image={images[product.id]}
                                         handleBuy={handleClickBuy}
                                         handleDelete={handleClickDelete}
                                     />
@@ -75,8 +84,10 @@ function Carrito() {
                 }
                 <div className="division"></div>
                 <div className="contenedor-subtotal">
-                    <div className="texto-subtotal">TOTAL:  </div>
+                    <div className="text-subtotal">TOTAL:  </div>
                     <div className="subtotal">{priceText(subTotal)}</div>
+                    <div className="spacer"></div>
+                    <button className="buy-button" onClick={Checkout}>BUY</button>
                 </div>
             </div>
         </>

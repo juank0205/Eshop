@@ -6,6 +6,11 @@ body, html{
     margin: 0%;
 }
 
+button:hover{
+    transition: 0.2s;
+    box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
 .App{
     width: 100%;
     display: flex;

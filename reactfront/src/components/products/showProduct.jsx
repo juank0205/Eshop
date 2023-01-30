@@ -8,6 +8,7 @@ const URI = 'http://localhost:8000/products/';
 const CompShowProducts = () => {
 
     const [products, setProducts] = useState([]);
+    const [images, setImages] = useState([]);
     useEffect(() => {
         getProducts()
     }, []);
@@ -15,11 +16,8 @@ const CompShowProducts = () => {
     const getProducts = async () => {
         const res = await axios.get(URI);
         const resImage = await axios.get(URI + 'image/');
-        let response = [];
-        for(let i=0; i<res.data.length; i++){
-            response.push({info: res.data[i], image: resImage.data[i]})
-        }
-        setProducts(response);
+        setProducts(res.data);
+        setImages(resImage.data);
     }
 
 
@@ -29,13 +27,11 @@ const CompShowProducts = () => {
                 {
                     products.map(product =>
                         <Product
-                            key={product.info.id}
-                            id={product.info.id}
-                            name={product.info.name}
-                            details={product.info.details}
-                            price={product.info.price}
-                            // imageName={product.imgName}
-                            image={product.image}
+                            key={product.id}
+                            id={product.id}
+                            name={product.name}
+                            price={product.price}
+                            image={images[product.id]}
                         />
                     )
                 }

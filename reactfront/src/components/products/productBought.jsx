@@ -1,18 +1,24 @@
+import axios from "axios";
 import { priceText } from "../../App";
 
+const URL = 'http://localhost:8000/products/book/';
+
 function Bought(props) {
-    const handleClickBuy = () => {
-        props.handleBuy(props.id);
+    const handleClickBuy = async () => {
+        const res = await axios.get(URL + props.id + '?f=book');
+        if (res.data === 'Booked') return props.handleBuy(props.id);
+        if (res.data === 'Stockout') return alert('Item out of stock');
     }
 
-    const handleClickDelete = ( )=> {
-        props.handleDelete(props.id);
+    const handleClickDelete = async () => {
+        const res = await axios.get(URL + props.id + '?f=unbook');
+        if (res.data === 'Unbooked') return props.handleDelete(props.id);
     }
 
     return (
         <div className="contenedor-comprado">
             <div className="contenedor-imagen-comprado">
-                <img src={props.image} alt="" />
+                <img src={props.image[0]} alt="" />
             </div>
             <div className="contenedor-producto-comprado">
                 <p>{props.name}</p>

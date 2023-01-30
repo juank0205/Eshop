@@ -13,9 +13,21 @@
     justify-content: center;
 }
 
-.contenedor-imagen-detalle img{
+.contenedor-imagen-detalle .slider{
     height: 100%;
-    max-width: 80%;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-imagen-detalle .slider .hOQiSy{
+    border: 2px solid #333;
+    border-radius: 5px;
+}
+
+.contenedor-imagen-detalle img{
+    max-width: 100%;
 }
 
 .contenedor-detalles-detalle{
