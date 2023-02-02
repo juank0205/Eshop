@@ -1,10 +1,12 @@
 import axios from "axios";
-import Bought from "./products/productBought";
+import Bought from "../products/productBought";
 import { useState } from "react";
-import '../stylesheets/carrito.css';
-import useCart from "./hooks/useCart";
+import '../../stylesheets/carrito.css';
+import useCart from "../hooks/useCart";
+import useUser from "../hooks/UseUser";
 import { useEffect } from "react";
-import { priceText } from "../App";
+import { priceText } from "../../App";
+import MPButton from "./checkout";
 
 const URI = 'http://localhost:8000/products/';
 
@@ -32,20 +34,39 @@ function Carrito() {
 
     const handleClickDelete = id => {
         cart.boughtObj[id]--;
-        cart.boughtObj[id] === 0 ? delete cart.boughtObj[id] : void(0);
+        cart.boughtObj[id] === 0 ? delete cart.boughtObj[id] : void (0);
         cart.setBoughtObj({ ...cart.boughtObj });
     }
 
-    const Checkout = async e => {
-        e.preventDefault();
-        await axios.put(URI + 'buy', cart.boughtObj)
-        .then(({data}) => {
-            alert(data);
-        }).catch(error => {
-            alert(error);
-        })
-        window.location.href = '/';
-    }
+    // const Checkout = async e => {
+    //     e.preventDefault();
+    //     await axios.put(URI + 'buy', cart.boughtObj)
+    //         .then(({ data }) => {
+    //             const script = document.createElement('script'); // Here we create the empty script tag
+    //             script.type = 'text/javascript'; // The type of the script
+    //             script.src = 'https://sdk.mercadopago.com/js/v2'; // The link where the script is hosted
+    //             script.setAttribute('data-preference-id', data); // Here we set its data-preference-id to the ID that the Mercado Pago API gives us
+    //             document.body.appendChild(script);
+
+    //             const mp = new window.MercadoPago('TEST-60491e71-6caf-48f1-ab50-a0a1f2b1aca4', {
+    //                 locale: 'es-CO'
+    //             })
+
+    //             mp.checkout({
+    //                 preference: {
+    //                     id: data
+    //                 },
+    //                 render: {
+    //                     container: '.cho-container',
+    //                     label: 'Checkout',
+    //                 }
+    //             });
+
+    //         }).catch(error => {
+    //             alert(error);
+    //         })
+    //     // window.location.href = '/';
+    // }
 
     let subTotal = 0;
 
@@ -61,9 +82,9 @@ function Carrito() {
                 <div className="division"></div>
                 {
                     products.map((product, index) => {
-                        subTotal += product.price*cart.boughtObj[product.id];
-                        return(
-                            <div className="cart-container" key={index+'-container'}>
+                        subTotal += product.price * cart.boughtObj[product.id];
+                        return (
+                            <div className="cart-container" key={index + '-container'}>
                                 <div className="bought" key={index}>
                                     <Bought
                                         key={index + 'bought'}
@@ -87,7 +108,7 @@ function Carrito() {
                     <div className="text-subtotal">TOTAL:  </div>
                     <div className="subtotal">{priceText(subTotal)}</div>
                     <div className="spacer"></div>
-                    <button className="buy-button" onClick={Checkout}>BUY</button>
+                    <MPButton/>
                 </div>
             </div>
         </>

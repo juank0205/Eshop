@@ -22,7 +22,7 @@ router.put('/admin', updateAdmin);
 router.get('/book/:id', bookProduct);
 
 //Buy booked objects
-router.put('/buy', buyProducts);
+router.post('/buy', buyProducts);
 
 //Get product by id
 router.get('/:id', getProduct);

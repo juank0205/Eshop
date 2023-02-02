@@ -3,7 +3,7 @@ import CompShowProducts from './components/products/showProduct.jsx';
 import ProductDetail from './components/products/productDetailed';
 import logo from './images/logo.png'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import Carrito from './components/carrito';
+import Carrito from './components/cart/carrito';
 import Login from './components/login/login';
 import Signup from './components/login/signup';
 import EditProduct from './components/products/editProduct';
@@ -72,6 +72,7 @@ function App() {
               <Route path='/login' element={<Login funcion={setter} />} />
               <Route path='/signup' element={<Signup funcion={setter} />}></Route>
               <Route path='/admin' element={<EditAdmin />}/>
+              <Route path='/checkout'></Route>
               
             </Routes>
           </BrowserRouter>
