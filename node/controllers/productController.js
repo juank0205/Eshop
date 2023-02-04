@@ -72,6 +72,11 @@ const updateContent = async (product, quantity) => {
     }
 }
 
+export const buyProductsAux = async (req, res) => {
+    Object.keys(req.body).forEach(product => updateContent(product, req.body));
+    res.send('Successful');
+}
+
 export const buyProducts = async (req, res) => {
     let preference = {
         items: [],
