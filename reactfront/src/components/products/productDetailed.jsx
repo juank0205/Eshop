@@ -26,19 +26,20 @@ function ProductDetail() {
     const [hasBought, setHasBought] = useState(false);
     const [images, setImages] = useState([]);
     const [productoDetalle, setProductoDetalle] = useState({ info: { name: '', price: 0, details: '' }, imagen: '' })
-    
+
     //Llamar la peticion del servidor
     useEffect(() => {
-        getProductoDetalle();
-    }, []);
+        //Obtener datos de producto y de imagenes
+        const getProductoDetalle = async () => {
+            const res = await axios.get(URL + '/' + dato);
+            const resImage = await axios.get(URL + '/image/' + dato);
+            setProductoDetalle(res.data);
+            setImages(resImage.data[dato]);
+        }
 
-    //Obtener datos de producto y de imagenes
-    const getProductoDetalle = async () => {
-        const res = await axios.get(URL + '/' + dato);
-        const resImage = await axios.get(URL + '/image/' + dato);
-        setProductoDetalle(res.data);
-        setImages(resImage.data[dato]);
-    }
+        getProductoDetalle();
+    }, [dato]);
+
 
     //Manejar la reserva segun la respuesta de la peticion
     const handleClick = async () => {

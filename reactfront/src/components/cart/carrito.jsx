@@ -18,10 +18,6 @@ function Carrito() {
     const [images, setImages] = useState([]); //Hook para almacenar las imagenes de la base de datos
     const [hasRendered, setHasRendered] = useState(false); //Hook para controlar cuntos botones de mercado pago salen
 
-    //Cargar los productos
-    useEffect(() => {
-        getProducts();
-    }, [cart])
 
 
     //Funcionalidad de mercadopago
@@ -50,25 +46,31 @@ function Carrito() {
             })
     }
 
-    //Peticion para obtener los productos y las imagenes del servidor y almacenarlos en un hook
-    const getProducts = async () => {
-        //Peticiones con axios
-        const res = await axios.get(URI);
-        const resImage = await axios.get(URI + '/image');
 
-        //Organizar la informacion en un arreglo 
-        let bought = [];
-        Object.keys(cart.boughtObj).map(id => bought.push(res.data[id - 1]));
-        setProducts(bought);
-        setImages(resImage.data);
-    }
+    //Cargar los productos
+    useEffect(() => {
+        //Peticion para obtener los productos y las imagenes del servidor y almacenarlos en un hook
+        const getProducts = async () => {
+            //Peticiones con axios
+            const res = await axios.get(URI);
+            const resImage = await axios.get(URI + '/image');
+
+            //Organizar la informacion en un arreglo 
+            let bought = [];
+            Object.keys(cart.boughtObj).map(id => bought.push(res.data[id - 1]));
+            setProducts(bought);
+            setImages(resImage.data);
+        }
+
+        getProducts();
+    }, [cart])
 
     //Funcion para cambiar el contador del carrito utilizando el contexto del carro (reservar)
     const handleClickBuy = id => {
         cart.boughtObj.hasOwnProperty(id) ? cart.boughtObj[id]++ : cart.boughtObj[id] = 1;
         cart.setBoughtObj({ ...cart.boughtObj });
     }
-    
+
     //Funcion para cambiar el contador del carrito utilizando el contexto del carro (reservar)
     const handleClickDelete = id => {
         cart.boughtObj[id]--;
