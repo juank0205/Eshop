@@ -1,13 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+
+//Hooks y contextos
 import userLogo from '../../images/user.png';
 import useUser from '../hooks/UseUser';
 import cart from '../../images/cart.png';
-import EditAdmin from './editAdmin.jsx';
 
 const LoginButtons = ({ logout }) => {
-    const user = useUser();
+    const user = useUser();//obtenemos el usuario
 
+    //Boton para cerrar sesion, elimina todos los variables que contorlan la autentificacion
     const handleClick = () => {
         logout(false);
         localStorage.removeItem('auth');
@@ -16,7 +18,9 @@ const LoginButtons = ({ logout }) => {
         window.location.href = '/';
     }
 
+    //Si Ya inicio sesion
     if (user.auth == "true") {
+        //Si es admin
         if (user.isAdmin == "true") return (
             <div className="contenedor-auth">
                 <button className="user" onClick={handleClick}>LOGOUT</button>
@@ -43,6 +47,7 @@ const LoginButtons = ({ logout }) => {
                 </div>
             </div>
         )
+        //Si no es admin
     } else {
         return (
             <div className="contenedor-auth">

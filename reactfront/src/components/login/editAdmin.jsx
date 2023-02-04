@@ -1,21 +1,31 @@
 import React from 'react';
-import { useState } from 'react';
 import axios from 'axios';
-import { Navigate, useLocation } from 'react-router-dom';
+
+//Hooks y contextos
+import { useState } from 'react';
 import useUser from '../hooks/UseUser';
 
-const URL = 'http://localhost:8000/products/admin'
+//Routing
+import { Navigate } from 'react-router-dom';
 
+const URL = 'https://eshop-ynv8.onrender.com/products/admin'
+
+//Componente
 const EditAdmin = () => {
+    //Impprtar el contexto del usuario
     const user = useUser();
+
+    //Definir hooks para el manejo de formularios
     const [hasUpdated, setHasUpdated] = useState(false);
     const [body, setbody] = useState({username: '', password: '', email: '', address: '', phone: 0});
     
+    //Funcion para cambiar el hook cada vez que cambia el input del form
     const inputChange = ({target}) => {
         const { name, value } = target;
         setbody({...body, [name]: value});  
     }
 
+    //funcion la cual se ejecuta cada vez que el form se da sumit al formulario
     const onSubmit = async e => {
         e.preventDefault();
         await axios.put(URL, body)
@@ -26,11 +36,11 @@ const EditAdmin = () => {
         setHasUpdated(true);
     }
 
-    if (hasUpdated){
+    if (hasUpdated){//se pregunta si se ya se edito el admin
         return <Navigate to={'/'}/>
     }
     
-    if (!user.isAdmin) return <Navigate to={'/'}/>
+    if (!user.isAdmin) return <Navigate to={'/'}/>//comprueba si el usuario es admin, si no lo es lo redirige a la pagina principal
 
     return (
         <>

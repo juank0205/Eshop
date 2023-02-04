@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
+const transporter = nodemailer.createTransport({ //Definir la configuracion del mail
     host: 'smtp.gmail.com',
     port: 587,
     auth: {
@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-export const sendMail = prod => {
+export const sendMail = prod => { //Enviar un correo cin los datos suministrados para informar que un producto tiene un stock menor al minimo 
     transporter.sendMail({
         from: "tienda <tiendafig@gmail.com",
         to: "juan.echeverry1@utp.edu.co",

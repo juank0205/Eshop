@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Pagina para un pago pendiente
 const Pending = () => {
   return (
     <div>

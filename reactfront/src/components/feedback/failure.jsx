@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Pagina para un pago fallido
 const Failure = () => {
   return (
     <div>

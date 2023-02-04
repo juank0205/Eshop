@@ -1,18 +1,25 @@
 import axios from 'axios';
+
+//Hooks y contextos
 import { useState, useEffect } from 'react';
 import Product from './product.jsx';
+
+//Estilos
 import '../../stylesheets/showProduct.css'
 
-const URI = 'http://localhost:8000/products/';
+const URI = 'https://eshop-ynv8.onrender.com/products/';
 
 const CompShowProducts = () => {
-
+    //Hook para almacenar los datos de los productos y sus imagenes
     const [products, setProducts] = useState([]);
     const [images, setImages] = useState([]);
+
+    //Llamar las peticiones
     useEffect(() => {
         getProducts()
     }, []);
 
+    //Definicion de las peticiones y asignacion de los hooks
     const getProducts = async () => {
         const res = await axios.get(URI);
         const resImage = await axios.get(URI + 'image/');

@@ -1,14 +1,16 @@
 import axios from "axios";
 import { priceText } from "../../App";
 
-const URL = 'http://localhost:8000/products/book/';
+const URL = 'https://eshop-ynv8.onrender.com/products/book/';
 
 function Bought(props) {
+    //Funcion de reservar un producto en el servidor, segun la respusta, decide si compra el producto o hace un alert diciendo que no hay stock
     const handleClickBuy = async () => {
         const res = await axios.get(URL + props.id + '?f=book');
         res.data === 'Booked' ? props.handleBuy(props.id) : res.data === 'Stockout'? alert('Item out of stock'): void(0);
     }
 
+    //Funcion de devolver un item del carrito, si la cantidad de objetos reservados es igual a 0, eliminar el producto del carrito
     const handleClickDelete = async () => {
         const res = await axios.get(URL + props.id + '?f=unbook');
         res.data === 'Unbooked' ? props.handleDelete(props.id) : void(0);

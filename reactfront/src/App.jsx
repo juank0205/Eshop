@@ -1,21 +1,27 @@
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
+import logo from './images/logo.png'
+
+//Hooks y contextos
+import CartContext from './components/context/CartContext';
+import UserContext from './components/context/UserContext'
+import { useState, useEffect } from 'react';
+
+//Componentes
 import CompShowProducts from './components/products/showProduct.jsx';
 import ProductDetail from './components/products/productDetailed';
-import logo from './images/logo.png'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Carrito from './components/cart/carrito';
 import Login from './components/login/login';
 import Signup from './components/login/signup';
 import EditProduct from './components/products/editProduct';
-import CartContext from './components/context/CartContext';
-import UserContext from './components/context/UserContext'
-import { useState, useEffect } from 'react';
 import LoginButtons from './components/login/loginButtons';
 import EditAdmin from './components/login/editAdmin';
 import Approved from './components/feedback/approved';
 import Failure from './components/feedback/failure';
 import Pending from './components/feedback/pending';
 
+//Funcion para dar formato al texto del precio
 export const priceText = price => {
   price = String(price);
   let string = '$';
@@ -29,27 +35,35 @@ export const priceText = price => {
 }
 
 function App() {
+  //Hooks para almacenar los estados de autentificacion y sus respectivos useEffect()
+
+  //Admin
   const [isAdmin, setIsAdmin] = useState(false);
   useEffect(() => {
     let admin = localStorage.getItem('isAdmin') || false;
     setIsAdmin(admin);
   }, [isAdmin])
   
+  //Login
   const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     let auth = localStorage.getItem('auth') || false;
     setIsAuth(auth);
   }, [isAuth]);
 
+  //Funcion que se pasa a los hijos para que modifiquen estos hooks
   const setter = (value) => {
     setIsAuth(value);
     setIsAdmin(value);
   }
 
+  //Hook de objetos comprados por el usuario
   const [cartObj, setCartObj] = useState({});
   const setterCartObj = value => setCartObj(value);
 
+  //Al inicio se define el header estatico y luego se aplica al routing respectivo
   return (
+    // Header
     <UserContext.Provider value={{ auth: isAuth, username: localStorage.getItem('username'), isAdmin: isAdmin }}>
       <CartContext.Provider value={{ boughtObj: cartObj, setBoughtObj: setterCartObj }}>
         <div className="App">
@@ -67,6 +81,8 @@ function App() {
                 </div>
               </div>
             </header>
+
+            {/* Routing */}
             <Routes>
               <Route path='/' element={<CompShowProducts />} />
               <Route path='/front/:id' element={<ProductDetail />} />

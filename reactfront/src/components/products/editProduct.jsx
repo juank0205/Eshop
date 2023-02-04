@@ -1,21 +1,27 @@
 import React from 'react';
-import { useState } from 'react';
 import axios from 'axios';
 import { Navigate, useLocation } from 'react-router-dom';
 
-const URL = 'http://localhost:8000/products'
+//Hooks y contextos
+import { useState } from 'react';
+
+const URL = 'https://eshop-ynv8.onrender.com/products/'
 
 const EditProduct = () => {
+    //Establecer hooks para el manejo de formularios
     const [hasUpdated, setHasUpdated] = useState(false);
     const [body, setbody] = useState({name: '', details: '', price: 0, stockMax: 0, stockMin: 0, stockCurrent: 0});
     
+    //Obtener el id de el parametro de la url
     const dato = useLocation().pathname.split('/')[2];
 
+    //Camibiar el valor de los hooks segun el contenido delformulario
     const inputChange = ({target}) => {
         const { name, value } = target;
         setbody({...body, [name]: value});  
     }
 
+    //Al finalizar con el formulario, realizar la peticion con el cuerpo definido en los input
     const onSubmit = async e => {
         e.preventDefault();
         await axios.put(URL + '/' + dato, body)
@@ -26,6 +32,7 @@ const EditProduct = () => {
         setHasUpdated(true);
     }
 
+    //Si el admin ya actualizo un producto, redireccionarlo a la pagina principal
     if (hasUpdated){
         return <Navigate to={'/'}/>
     }

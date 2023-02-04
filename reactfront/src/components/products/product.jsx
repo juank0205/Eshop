@@ -4,6 +4,7 @@ import ImageSlider, { Slide } from "react-auto-image-slider";
 import useUser from '../hooks/UseUser';
 import '../../stylesheets/product.css'
 
+//Implementacion de un carousel de imagenes  encontrado en internet
 function Product(props) {
     const user = useUser();
     return (

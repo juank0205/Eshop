@@ -1,25 +1,32 @@
-import { useState } from 'react';
-import '../../stylesheets/login.css'
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 
-function Signup({funcion}) {
+//Hooks
+import { useState } from 'react';
+import '../../stylesheets/login.css'
 
+function Signup({funcion}) {
+    //Definir los hooks para controlar el formulario
     const [body, setbody] = useState({username: '', password: '', email: '', address: '', phone: 0});
     const [auth, setAuth] = useState(false);
 
+    //Establecer el valor de los hooks a lo que esta en los imputs del formulario
     const inputChange = ({target}) => {
         const { name, value } = target;
         setbody({...body, [name]: value});  
     }
 
+    //Al terminar con el formulario, realizar la peticion al servidor para 
     const onSubmit = e => {
         e.preventDefault();
-        axios.post('http://localhost:8000/products/signup', body)
+        axios.post('https://eshop-ynv8.onrender.com/products/signup', body)
         .then(({data})=> {
             if(data !== 'User Created successfully') return alert('Data not valid');
+            //Si la peticion fue exitosa
+            //guardar datos en localstorage
             localStorage.setItem('auth', true);
             localStorage.setItem('username', body.username);
+            //Cambiar el valor de los contextos
             funcion(true);
             setAuth(true);
             alert('User created succesfully')
@@ -27,6 +34,7 @@ function Signup({funcion}) {
         .catch((response) => alert(response.message));
     }
 
+    //Si el usuario no esta regustrado, redireccionar a la pagina principal
     if(auth){
         return <Navigate to='/'/>
     }

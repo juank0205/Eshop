@@ -1,5 +1,6 @@
 import React from 'react'
 
+//Pagina para un pago exitoso
 const Approved = () => {
   return (
     <div>

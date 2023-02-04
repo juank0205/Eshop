@@ -2,6 +2,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+//Definir los campos de la base de datos del producto
 const ProductModel = db.define('productos', {
     name: {type: DataTypes.STRING},
     details: {type: DataTypes.STRING},
