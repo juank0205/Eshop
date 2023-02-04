@@ -12,6 +12,9 @@ import UserContext from './components/context/UserContext'
 import { useState, useEffect } from 'react';
 import LoginButtons from './components/login/loginButtons';
 import EditAdmin from './components/login/editAdmin';
+import Approved from './components/feedback/approved';
+import Failure from './components/feedback/failure';
+import Pending from './components/feedback/pending';
 
 export const priceText = price => {
   price = String(price);
@@ -72,7 +75,10 @@ function App() {
               <Route path='/login' element={<Login funcion={setter} />} />
               <Route path='/signup' element={<Signup funcion={setter} />}></Route>
               <Route path='/admin' element={<EditAdmin />}/>
-              <Route path='/checkout'></Route>
+              <Route path='/feedback' element={<Approved/>}></Route>
+              <Route path='/failure' element={<Failure/>}></Route>
+              <Route path='/pending' element={<Pending/>}></Route>
+
               
             </Routes>
           </BrowserRouter>

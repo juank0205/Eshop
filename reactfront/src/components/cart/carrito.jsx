@@ -14,9 +14,36 @@ function Carrito() {
     const cart = useCart();
     const [products, setProducts] = useState([]);
     const [images, setImages] = useState([]);
+    const [hasRendered, setHasRendered] = useState(false);
+
     useEffect(() => {
         getProducts();
     }, [cart])
+
+
+    const fetchCheckout = async () => {
+        await axios.post('http://localhost:8000/products/buy', cart.boughtObj)
+            .then(({ data }) => {
+                document.getElementById('mercado-pago-id').setAttribute('data-preference-id', data.preferenceId);
+
+                const mp = new window.MercadoPago('TEST-60491e71-6caf-48f1-ab50-a0a1f2b1aca4', {
+                    locale: 'es-CO'
+                })
+
+                mp.checkout({
+                    preference: {
+                        id: data.preferenceId
+                    },
+                    render: {
+                        container: '.cho-container',
+                        label: 'Checkout',
+                    }
+                });
+
+            }).catch(error => {
+                alert(error);
+            })
+    }
 
     const getProducts = async () => {
         const res = await axios.get(URI);
@@ -36,6 +63,12 @@ function Carrito() {
         cart.boughtObj[id]--;
         cart.boughtObj[id] === 0 ? delete cart.boughtObj[id] : void (0);
         cart.setBoughtObj({ ...cart.boughtObj });
+    }
+
+    const buyClick = () => {
+        if (hasRendered) return;
+        fetchCheckout();
+        setHasRendered(true);
     }
 
     // const Checkout = async e => {
@@ -108,7 +141,8 @@ function Carrito() {
                     <div className="text-subtotal">TOTAL:  </div>
                     <div className="subtotal">{priceText(subTotal)}</div>
                     <div className="spacer"></div>
-                    <MPButton/>
+                    <button onClick={buyClick}>PENE DE MONO</button>
+                    <div className="cho-container" disabled={hasRendered}></div>
                 </div>
             </div>
         </>

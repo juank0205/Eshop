@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useEffect, useContext } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import useCart from '../hooks/useCart';
 
 // In this example i'm using React
@@ -11,21 +12,23 @@ import useCart from '../hooks/useCart';
 
 export default function MPButton() {
   const cart = useCart();
-
+  
   useEffect(() => {
-    if (Object.keys(cart.boughtObj).length == 0) return;
-    // if (document.querySelector('.cho-container')) return;
+    // console.log(document.querySelector('.cho-container').childNodes.length)
+    if (Object.keys(cart.boughtObj).length === 0) return;
+    // if (document.querySelector('.cho-container').childNodes.length != 0) return;
 
     // The async function is needed since we can't do async stuff in the top level of our useEffect
     const fetchCheckout = async () => {
       await axios.post('http://localhost:8000/products/buy', cart.boughtObj)
       .then(({data}) => {
-        const script = document.createElement('script') // Here we create the empty script tag
-        script.type = 'text/javascript' // The type of the script
-        script.src = 'https://sdk.mercadopago.com/js/v2' // The link where the script is hosted
-        script.setAttribute('data-preference-id', data.preferenceId) // Here we set its data-preference-id to the ID that the Mercado Pago API gives us
-        document.body.appendChild(script) // Here we append it to the body of our page
+        // const script = document.createElement('script') // Here we create the empty script tag
+        // script.type = 'text/javascript' // The type of the script
+        // script.src = 'https://sdk.mercadopago.com/js/v2' // The link where the script is hosted
+        // script.setAttribute('data-preference-id', data.preferenceId) // Here we set its data-preference-id to the ID that the Mercado Pago API gives us
+        // document.body.appendChild(script) // Here we append it to the body of our page
 
+        document.getElementById('mercado-pago-id').setAttribute('data-preference-id', data.preferenceId);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         
@@ -48,10 +51,9 @@ export default function MPButton() {
       }).catch(error => {
         // alert(error);
       })
-
     }
     fetchCheckout()
-  }, [cart])
+  }, [])
 
   return <div className="cho-container"></div>
 }
