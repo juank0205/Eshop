@@ -3,7 +3,6 @@ import UserModel from "../models/userModel.js";
 
 export const getUser = async (req, res) => {
     try {
-        console.log(encrypt(req.body.password))
         const users = await UserModel.findAll({
             where: {
                 username: req.body.username,

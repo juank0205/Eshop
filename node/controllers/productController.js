@@ -32,6 +32,10 @@ export const updateProduct = async (req, res) => {
         await ProductModel.update(req.body, {
             where: { id: req.params.id }
         });
+        productsStock[req.params.id] = req.body.stockCurrent;
+        productMinStock[req.params.id] = req.body.stockMin;
+        console.log(productStock);
+        console.log(productMinStock);
         res.json('Registro actualizado correctamente')
     } catch (error) {
         res.json({ message: error });
@@ -53,6 +57,7 @@ export const bookProduct = (req, res) => {
         res.json({ message: error.message });
     }
 }
+
 
 const updateContent = async (product, quantity) => {
     const stock = await ProductModel.findAll({
@@ -86,11 +91,6 @@ export const buyProducts = async (req, res) => {
     })
     const response = await mercadopago.preferences.create(preference);
     const preferenceId = response.body.id;
+    Object.keys(req.body).forEach(product => updateContent(product, req.body));
     res.send({preferenceId});
-    // try {
-    //     Object.keys(req.body).forEach(product => updateContent(product, req.body));
-    //     res.json("Successful purchase");
-    // } catch (error) {
-    //     res.json(error.message);
-    // }
 }
