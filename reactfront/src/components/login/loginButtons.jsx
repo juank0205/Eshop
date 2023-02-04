@@ -19,9 +19,9 @@ const LoginButtons = ({ logout }) => {
     }
 
     //Si Ya inicio sesion
-    if (user.auth == "true") {
+    if (user.auth === "true") {
         //Si es admin
-        if (user.isAdmin == "true") return (
+        if (user.isAdmin === "true") return (
             <div className="contenedor-auth">
                 <button className="user" onClick={handleClick}>LOGOUT</button>
                 <Link to={'/admin'}>
